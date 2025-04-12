@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>EMA监控</title>
+		<link href="./css/bootstrap.min.css" rel="stylesheet" />
+		<style>
+			.total-info {
+				display: flex;
+				justify-content: space-around;
+				line-height: 30px;
+			}
+
+			.profit-box {
+				display: flex;
+				justify-content: space-between;
+				font-size: 14px;
+				padding: 10px 15px;
+			}
+
+			#myTotalCost span {
+				padding: 0 10px;
+				font-size: 16px;
+				font-weight: 600;
+			}
+
+			th {
+				font-size: 13px;
+			}
+
+			#priceList {
+				font-size: 13px;
+			}
+
+			.up {
+				color: green;
+				font-weight: 600;
+			}
+
+			.down {
+				color: brown;
+				/* font-weight: 600; */
+			}
+
+			#myTotalProfit span {
+				font-size: 16px;
+				font-weight: 600;
+				color: green;
+			}
+
+			#myTotalProfit span.lose {
+				color: brown;
+			}
+
+			.caption-top .name {
+				font-weight: 600;
+				color: blue;
+			}
+
+			.price {
+				font-weight: 600;
+			}
+
+			.minPrice {
+				color: brown
+			}
+
+			.maxPrice {
+				color: green
+			}
+
+			/* 自定义样式 */
+			.fixed-table {
+				overflow-x: auto;
+				height: calc(100vh - 80px);
+				/* 根据需要调整最大高度 */
+			}
+
+			.fixed-table .table-fixed-header {
+				position: sticky;
+				top: 0;
+				background-color: white;
+				/* 根据需要调整背景颜色 */
+				z-index: 10;
+			}
+
+			.fixed-table .table-fixed-header th {
+				background-color: white;
+				/* 根据需要调整背景颜色 */
+			}
+
+			.fixed-table .table-scrollable-body {
+				overflow-y: auto;
+			}
+
+			.sort-button.actived {
+				background-color: blueviolet;
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script type="text/html" id="emaTemp">
+			<tr class="{{coinId}}" interval="{{interval}}" isDuotou="{{isDuotouFlag}}">
+				<td class="name">{{name}}</td>
+				<td class="last1hPrice">{{index}}</td>
+				<td class="last4hPrice">{{startTime}}</td>
+				<td class="last24hPrice">{{endTime}}</td>
+				<td class="maxPrice">{{reboundTime}}</td>
+				<td class="interval">{{reboundPercentage}}</td>
+				<td class="interval">{{high_price_4}}</td>
+				<td class="isEma21Died">{{occurrenceCount}}</td>
+			</tr>
+		</script>
+		<div style="display: flex;padding: 30px;">
+			<select class="form-control" id="interval_select" style="width: 200px;">
+				<option value="3m">3m</option>
+				<option value="5m">5m</option>
+				<option value="15m">15m</option>
+				<option value="30m">30m</option>
+				<option value="1h" selected>1h</option>
+			</select>
+			<select class="form-control" id="side_select" style="width: 200px;margin-left: 30px;">
+				<option value="up" >连涨</option>
+				<option value="down" selected>连跌</option>
+			</select>
+			<button id="confirmBtn" class="btn btn-primary" style="margin-left: 30px;">回测</button>
+		</div>
+		<!-- 固定头部的表格 -->
+		<div class="fixed-table">
+			<table class="table">
+				<thead class="table-fixed-header">
+					<tr>
+						<th scope="col" width="15%">连跌根数</th>
+						<th scope="col">当前序号</th>
+						<th scope="col">开始时间</th>
+						<th scope="col">结束时间</th>
+						<th scope="col">反弹时刻</th>
+						<th scope="col">后四根反弹幅度</th>
+						<th scope="col">后四根最高价</th>
+						<th scope="col">总次数</th>
+					</tr>
+				</thead>
+				<tbody class="table-scrollable-body" id="tableList">
+
+				</tbody>
+			</table>
+		</div>
+
+
+		<script src="./js/bootstrap.bundle.min.js"></script>
+		<script src="./js/jquery.js"></script>
+		<script src="./js/app.js"></script>
+	</body>
+
+</html>
